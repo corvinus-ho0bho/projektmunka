@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="10749ef4e3444345941759963edb0d95" Name="Diagram1">
+        <EntityTypeShape EntityType="Database1Model.Jogosultsag" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Konyv" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Profil" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Raktar" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Rendeles" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.RendelesOssz" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Ugyfel" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="Database1Model.FK_Ugyfel_Jogosultsag" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_Konyv_Raktar" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_RendelesOssz_Konyv" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_Ugyfel_Profil" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_Rendeles_Ugyfel1" ManuallyRouted="false" />
+        <AssociationConnector Association="Database1Model.FK_RendelesOssz_Rendeles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

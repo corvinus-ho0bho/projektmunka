@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities">
+    <EntitySetMapping Name="Jogosultsag">
+      <EntityTypeMapping TypeName="Database1Model.Jogosultsag">
+        <MappingFragment StoreEntitySet="Jogosultsag">
+          <ScalarProperty Name="idJogosultsag" ColumnName="idJogosultsag" />
+          <ScalarProperty Name="KedvezmenyTipus" ColumnName="KedvezmenyTipus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Konyv">
+      <EntityTypeMapping TypeName="Database1Model.Konyv">
+        <MappingFragment StoreEntitySet="Konyv">
+          <ScalarProperty Name="idKonyv" ColumnName="idKonyv" />
+          <ScalarProperty Name="Nev" ColumnName="Nev" />
+          <ScalarProperty Name="Iro" ColumnName="Iro" />
+          <ScalarProperty Name="Ar" ColumnName="Ar" />
+          <ScalarProperty Name="Keszlet" ColumnName="Keszlet" />
+          <ScalarProperty Name="RaktarFK" ColumnName="RaktarFK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profil">
+      <EntityTypeMapping TypeName="Database1Model.Profil">
+        <MappingFragment StoreEntitySet="Profil">
+          <ScalarProperty Name="idUgyfelesAdatok" ColumnName="idUgyfelesAdatok" />
+          <ScalarProperty Name="Nev" ColumnName="Nev" />
+          <ScalarProperty Name="Email_Cim" ColumnName="Email_Cim" />
+          <ScalarProperty Name="SzuletesiDatum" ColumnName="SzuletesiDatum" />
+          <ScalarProperty Name="SzallitasiCim" ColumnName="SzallitasiCim" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Raktar">
+      <EntityTypeMapping TypeName="Database1Model.Raktar">
+        <MappingFragment StoreEntitySet="Raktar">
+          <ScalarProperty Name="idRaktar" ColumnName="idRaktar" />
+          <ScalarProperty Name="Nev" ColumnName="Nev" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rendeles">
+      <EntityTypeMapping TypeName="Database1Model.Rendeles">
+        <MappingFragment StoreEntitySet="Rendeles">
+          <ScalarProperty Name="idRendelesOsszesites" ColumnName="idRendelesOsszesites" />
+          <ScalarProperty Name="RendelesiDatum" ColumnName="RendelesiDatum" />
+          <ScalarProperty Name="Kedvezmenyes" ColumnName="Kedvezmenyes" />
+          <ScalarProperty Name="Ugyfel_idUgyfel" ColumnName="Ugyfel_idUgyfel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RendelesOssz">
+      <EntityTypeMapping TypeName="Database1Model.RendelesOssz">
+        <MappingFragment StoreEntitySet="RendelesOssz">
+          <ScalarProperty Name="idKapcsolo" ColumnName="idKapcsolo" />
+          <ScalarProperty Name="Rendeles_FK" ColumnName="Rendeles_FK" />
+          <ScalarProperty Name="Konyv_FK" ColumnName="Konyv_FK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ugyfel">
+      <EntityTypeMapping TypeName="Database1Model.Ugyfel">
+        <MappingFragment StoreEntitySet="Ugyfel">
+          <ScalarProperty Name="idUgyfel" ColumnName="idUgyfel" />
+          <ScalarProperty Name="JogosultsagFK" ColumnName="JogosultsagFK" />
+          <ScalarProperty Name="UgyfelesAdatokFK" ColumnName="UgyfelesAdatokFK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

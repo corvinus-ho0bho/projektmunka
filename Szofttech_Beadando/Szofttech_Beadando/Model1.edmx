@@ -1,0 +1,451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Jogosultsag">
+          <Key>
+            <PropertyRef Name="idJogosultsag" />
+          </Key>
+          <Property Name="idJogosultsag" Type="int" Nullable="false" />
+          <Property Name="KedvezmenyTipus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Konyv">
+          <Key>
+            <PropertyRef Name="idKonyv" />
+          </Key>
+          <Property Name="idKonyv" Type="int" Nullable="false" />
+          <Property Name="Nev" Type="nvarchar" MaxLength="45" />
+          <Property Name="Iro" Type="nvarchar" MaxLength="45" />
+          <Property Name="Ar" Type="int" />
+          <Property Name="Keszlet" Type="varchar" MaxLength="45" />
+          <Property Name="RaktarFK" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Profil">
+          <Key>
+            <PropertyRef Name="idUgyfelesAdatok" />
+          </Key>
+          <Property Name="idUgyfelesAdatok" Type="int" Nullable="false" />
+          <Property Name="Nev" Type="nvarchar" MaxLength="45" />
+          <Property Name="Email_Cim" Type="nvarchar" MaxLength="45" />
+          <Property Name="SzuletesiDatum" Type="date" />
+          <Property Name="SzallitasiCim" Type="nvarchar" MaxLength="70" />
+        </EntityType>
+        <EntityType Name="Raktar">
+          <Key>
+            <PropertyRef Name="idRaktar" />
+          </Key>
+          <Property Name="idRaktar" Type="int" Nullable="false" />
+          <Property Name="Nev" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Rendeles">
+          <Key>
+            <PropertyRef Name="idRendelesOsszesites" />
+          </Key>
+          <Property Name="idRendelesOsszesites" Type="int" Nullable="false" />
+          <Property Name="RendelesiDatum" Type="date" Nullable="false" />
+          <Property Name="Kedvezmenyes" Type="tinyint" />
+          <Property Name="Ugyfel_idUgyfel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RendelesOssz">
+          <Key>
+            <PropertyRef Name="idKapcsolo" />
+          </Key>
+          <Property Name="idKapcsolo" Type="int" Nullable="false" />
+          <Property Name="Rendeles_FK" Type="int" Nullable="false" />
+          <Property Name="Konyv_FK" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ugyfel">
+          <Key>
+            <PropertyRef Name="idUgyfel" />
+          </Key>
+          <Property Name="idUgyfel" Type="int" Nullable="false" />
+          <Property Name="JogosultsagFK" Type="int" Nullable="false" />
+          <Property Name="UgyfelesAdatokFK" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Konyv_Raktar">
+          <End Role="Raktar" Type="Self.Raktar" Multiplicity="1" />
+          <End Role="Konyv" Type="Self.Konyv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Raktar">
+              <PropertyRef Name="idRaktar" />
+            </Principal>
+            <Dependent Role="Konyv">
+              <PropertyRef Name="RaktarFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rendeles_Ugyfel1">
+          <End Role="Ugyfel" Type="Self.Ugyfel" Multiplicity="1" />
+          <End Role="Rendeles" Type="Self.Rendeles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ugyfel">
+              <PropertyRef Name="idUgyfel" />
+            </Principal>
+            <Dependent Role="Rendeles">
+              <PropertyRef Name="Ugyfel_idUgyfel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendelesOssz_Konyv">
+          <End Role="Konyv" Type="Self.Konyv" Multiplicity="1" />
+          <End Role="RendelesOssz" Type="Self.RendelesOssz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Konyv">
+              <PropertyRef Name="idKonyv" />
+            </Principal>
+            <Dependent Role="RendelesOssz">
+              <PropertyRef Name="Konyv_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendelesOssz_Rendeles">
+          <End Role="Rendeles" Type="Self.Rendeles" Multiplicity="1" />
+          <End Role="RendelesOssz" Type="Self.RendelesOssz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rendeles">
+              <PropertyRef Name="idRendelesOsszesites" />
+            </Principal>
+            <Dependent Role="RendelesOssz">
+              <PropertyRef Name="Rendeles_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ugyfel_Jogosultsag">
+          <End Role="Jogosultsag" Type="Self.Jogosultsag" Multiplicity="1" />
+          <End Role="Ugyfel" Type="Self.Ugyfel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jogosultsag">
+              <PropertyRef Name="idJogosultsag" />
+            </Principal>
+            <Dependent Role="Ugyfel">
+              <PropertyRef Name="JogosultsagFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ugyfel_Profil">
+          <End Role="Profil" Type="Self.Profil" Multiplicity="1" />
+          <End Role="Ugyfel" Type="Self.Ugyfel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profil">
+              <PropertyRef Name="idUgyfelesAdatok" />
+            </Principal>
+            <Dependent Role="Ugyfel">
+              <PropertyRef Name="UgyfelesAdatokFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="Jogosultsag" EntityType="Self.Jogosultsag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Konyv" EntityType="Self.Konyv" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profil" EntityType="Self.Profil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Raktar" EntityType="Self.Raktar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rendeles" EntityType="Self.Rendeles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RendelesOssz" EntityType="Self.RendelesOssz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ugyfel" EntityType="Self.Ugyfel" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Konyv_Raktar" Association="Self.FK_Konyv_Raktar">
+            <End Role="Raktar" EntitySet="Raktar" />
+            <End Role="Konyv" EntitySet="Konyv" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rendeles_Ugyfel1" Association="Self.FK_Rendeles_Ugyfel1">
+            <End Role="Ugyfel" EntitySet="Ugyfel" />
+            <End Role="Rendeles" EntitySet="Rendeles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendelesOssz_Konyv" Association="Self.FK_RendelesOssz_Konyv">
+            <End Role="Konyv" EntitySet="Konyv" />
+            <End Role="RendelesOssz" EntitySet="RendelesOssz" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendelesOssz_Rendeles" Association="Self.FK_RendelesOssz_Rendeles">
+            <End Role="Rendeles" EntitySet="Rendeles" />
+            <End Role="RendelesOssz" EntitySet="RendelesOssz" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ugyfel_Jogosultsag" Association="Self.FK_Ugyfel_Jogosultsag">
+            <End Role="Jogosultsag" EntitySet="Jogosultsag" />
+            <End Role="Ugyfel" EntitySet="Ugyfel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ugyfel_Profil" Association="Self.FK_Ugyfel_Profil">
+            <End Role="Profil" EntitySet="Profil" />
+            <End Role="Ugyfel" EntitySet="Ugyfel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Jogosultsag">
+          <Key>
+            <PropertyRef Name="idJogosultsag" />
+          </Key>
+          <Property Name="idJogosultsag" Type="Int32" Nullable="false" />
+          <Property Name="KedvezmenyTipus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ugyfel" Relationship="Self.FK_Ugyfel_Jogosultsag" FromRole="Jogosultsag" ToRole="Ugyfel" />
+        </EntityType>
+        <EntityType Name="Konyv">
+          <Key>
+            <PropertyRef Name="idKonyv" />
+          </Key>
+          <Property Name="idKonyv" Type="Int32" Nullable="false" />
+          <Property Name="Nev" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="Iro" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="Ar" Type="Int32" />
+          <Property Name="Keszlet" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="RaktarFK" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Raktar" Relationship="Self.FK_Konyv_Raktar" FromRole="Konyv" ToRole="Raktar" />
+          <NavigationProperty Name="RendelesOssz" Relationship="Self.FK_RendelesOssz_Konyv" FromRole="Konyv" ToRole="RendelesOssz" />
+        </EntityType>
+        <EntityType Name="Profil">
+          <Key>
+            <PropertyRef Name="idUgyfelesAdatok" />
+          </Key>
+          <Property Name="idUgyfelesAdatok" Type="Int32" Nullable="false" />
+          <Property Name="Nev" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="Email_Cim" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="SzuletesiDatum" Type="DateTime" Precision="0" />
+          <Property Name="SzallitasiCim" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ugyfel" Relationship="Self.FK_Ugyfel_Profil" FromRole="Profil" ToRole="Ugyfel" />
+        </EntityType>
+        <EntityType Name="Raktar">
+          <Key>
+            <PropertyRef Name="idRaktar" />
+          </Key>
+          <Property Name="idRaktar" Type="Int32" Nullable="false" />
+          <Property Name="Nev" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Konyv" Relationship="Self.FK_Konyv_Raktar" FromRole="Raktar" ToRole="Konyv" />
+        </EntityType>
+        <EntityType Name="Rendeles">
+          <Key>
+            <PropertyRef Name="idRendelesOsszesites" />
+          </Key>
+          <Property Name="idRendelesOsszesites" Type="Int32" Nullable="false" />
+          <Property Name="RendelesiDatum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Kedvezmenyes" Type="Byte" />
+          <Property Name="Ugyfel_idUgyfel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ugyfel" Relationship="Self.FK_Rendeles_Ugyfel1" FromRole="Rendeles" ToRole="Ugyfel" />
+          <NavigationProperty Name="RendelesOssz" Relationship="Self.FK_RendelesOssz_Rendeles" FromRole="Rendeles" ToRole="RendelesOssz" />
+        </EntityType>
+        <EntityType Name="RendelesOssz">
+          <Key>
+            <PropertyRef Name="idKapcsolo" />
+          </Key>
+          <Property Name="idKapcsolo" Type="Int32" Nullable="false" />
+          <Property Name="Rendeles_FK" Type="Int32" Nullable="false" />
+          <Property Name="Konyv_FK" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Konyv" Relationship="Self.FK_RendelesOssz_Konyv" FromRole="RendelesOssz" ToRole="Konyv" />
+          <NavigationProperty Name="Rendeles" Relationship="Self.FK_RendelesOssz_Rendeles" FromRole="RendelesOssz" ToRole="Rendeles" />
+        </EntityType>
+        <EntityType Name="Ugyfel">
+          <Key>
+            <PropertyRef Name="idUgyfel" />
+          </Key>
+          <Property Name="idUgyfel" Type="Int32" Nullable="false" />
+          <Property Name="JogosultsagFK" Type="Int32" Nullable="false" />
+          <Property Name="UgyfelesAdatokFK" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Jogosultsag" Relationship="Self.FK_Ugyfel_Jogosultsag" FromRole="Ugyfel" ToRole="Jogosultsag" />
+          <NavigationProperty Name="Profil" Relationship="Self.FK_Ugyfel_Profil" FromRole="Ugyfel" ToRole="Profil" />
+          <NavigationProperty Name="Rendeles" Relationship="Self.FK_Rendeles_Ugyfel1" FromRole="Ugyfel" ToRole="Rendeles" />
+        </EntityType>
+        <Association Name="FK_Ugyfel_Jogosultsag">
+          <End Role="Jogosultsag" Type="Self.Jogosultsag" Multiplicity="1" />
+          <End Role="Ugyfel" Type="Self.Ugyfel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jogosultsag">
+              <PropertyRef Name="idJogosultsag" />
+            </Principal>
+            <Dependent Role="Ugyfel">
+              <PropertyRef Name="JogosultsagFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Konyv_Raktar">
+          <End Role="Raktar" Type="Self.Raktar" Multiplicity="1" />
+          <End Role="Konyv" Type="Self.Konyv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Raktar">
+              <PropertyRef Name="idRaktar" />
+            </Principal>
+            <Dependent Role="Konyv">
+              <PropertyRef Name="RaktarFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendelesOssz_Konyv">
+          <End Role="Konyv" Type="Self.Konyv" Multiplicity="1" />
+          <End Role="RendelesOssz" Type="Self.RendelesOssz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Konyv">
+              <PropertyRef Name="idKonyv" />
+            </Principal>
+            <Dependent Role="RendelesOssz">
+              <PropertyRef Name="Konyv_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ugyfel_Profil">
+          <End Role="Profil" Type="Self.Profil" Multiplicity="1" />
+          <End Role="Ugyfel" Type="Self.Ugyfel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profil">
+              <PropertyRef Name="idUgyfelesAdatok" />
+            </Principal>
+            <Dependent Role="Ugyfel">
+              <PropertyRef Name="UgyfelesAdatokFK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rendeles_Ugyfel1">
+          <End Role="Ugyfel" Type="Self.Ugyfel" Multiplicity="1" />
+          <End Role="Rendeles" Type="Self.Rendeles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ugyfel">
+              <PropertyRef Name="idUgyfel" />
+            </Principal>
+            <Dependent Role="Rendeles">
+              <PropertyRef Name="Ugyfel_idUgyfel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RendelesOssz_Rendeles">
+          <End Role="Rendeles" Type="Self.Rendeles" Multiplicity="1" />
+          <End Role="RendelesOssz" Type="Self.RendelesOssz" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rendeles">
+              <PropertyRef Name="idRendelesOsszesites" />
+            </Principal>
+            <Dependent Role="RendelesOssz">
+              <PropertyRef Name="Rendeles_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Jogosultsag" EntityType="Self.Jogosultsag" />
+          <EntitySet Name="Konyv" EntityType="Self.Konyv" />
+          <EntitySet Name="Profil" EntityType="Self.Profil" />
+          <EntitySet Name="Raktar" EntityType="Self.Raktar" />
+          <EntitySet Name="Rendeles" EntityType="Self.Rendeles" />
+          <EntitySet Name="RendelesOssz" EntityType="Self.RendelesOssz" />
+          <EntitySet Name="Ugyfel" EntityType="Self.Ugyfel" />
+          <AssociationSet Name="FK_Ugyfel_Jogosultsag" Association="Self.FK_Ugyfel_Jogosultsag">
+            <End Role="Jogosultsag" EntitySet="Jogosultsag" />
+            <End Role="Ugyfel" EntitySet="Ugyfel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Konyv_Raktar" Association="Self.FK_Konyv_Raktar">
+            <End Role="Raktar" EntitySet="Raktar" />
+            <End Role="Konyv" EntitySet="Konyv" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendelesOssz_Konyv" Association="Self.FK_RendelesOssz_Konyv">
+            <End Role="Konyv" EntitySet="Konyv" />
+            <End Role="RendelesOssz" EntitySet="RendelesOssz" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ugyfel_Profil" Association="Self.FK_Ugyfel_Profil">
+            <End Role="Profil" EntitySet="Profil" />
+            <End Role="Ugyfel" EntitySet="Ugyfel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rendeles_Ugyfel1" Association="Self.FK_Rendeles_Ugyfel1">
+            <End Role="Ugyfel" EntitySet="Ugyfel" />
+            <End Role="Rendeles" EntitySet="Rendeles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RendelesOssz_Rendeles" Association="Self.FK_RendelesOssz_Rendeles">
+            <End Role="Rendeles" EntitySet="Rendeles" />
+            <End Role="RendelesOssz" EntitySet="RendelesOssz" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities">
+          <EntitySetMapping Name="Jogosultsag">
+            <EntityTypeMapping TypeName="Database1Model.Jogosultsag">
+              <MappingFragment StoreEntitySet="Jogosultsag">
+                <ScalarProperty Name="idJogosultsag" ColumnName="idJogosultsag" />
+                <ScalarProperty Name="KedvezmenyTipus" ColumnName="KedvezmenyTipus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Konyv">
+            <EntityTypeMapping TypeName="Database1Model.Konyv">
+              <MappingFragment StoreEntitySet="Konyv">
+                <ScalarProperty Name="idKonyv" ColumnName="idKonyv" />
+                <ScalarProperty Name="Nev" ColumnName="Nev" />
+                <ScalarProperty Name="Iro" ColumnName="Iro" />
+                <ScalarProperty Name="Ar" ColumnName="Ar" />
+                <ScalarProperty Name="Keszlet" ColumnName="Keszlet" />
+                <ScalarProperty Name="RaktarFK" ColumnName="RaktarFK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profil">
+            <EntityTypeMapping TypeName="Database1Model.Profil">
+              <MappingFragment StoreEntitySet="Profil">
+                <ScalarProperty Name="idUgyfelesAdatok" ColumnName="idUgyfelesAdatok" />
+                <ScalarProperty Name="Nev" ColumnName="Nev" />
+                <ScalarProperty Name="Email_Cim" ColumnName="Email_Cim" />
+                <ScalarProperty Name="SzuletesiDatum" ColumnName="SzuletesiDatum" />
+                <ScalarProperty Name="SzallitasiCim" ColumnName="SzallitasiCim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Raktar">
+            <EntityTypeMapping TypeName="Database1Model.Raktar">
+              <MappingFragment StoreEntitySet="Raktar">
+                <ScalarProperty Name="idRaktar" ColumnName="idRaktar" />
+                <ScalarProperty Name="Nev" ColumnName="Nev" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rendeles">
+            <EntityTypeMapping TypeName="Database1Model.Rendeles">
+              <MappingFragment StoreEntitySet="Rendeles">
+                <ScalarProperty Name="idRendelesOsszesites" ColumnName="idRendelesOsszesites" />
+                <ScalarProperty Name="RendelesiDatum" ColumnName="RendelesiDatum" />
+                <ScalarProperty Name="Kedvezmenyes" ColumnName="Kedvezmenyes" />
+                <ScalarProperty Name="Ugyfel_idUgyfel" ColumnName="Ugyfel_idUgyfel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RendelesOssz">
+            <EntityTypeMapping TypeName="Database1Model.RendelesOssz">
+              <MappingFragment StoreEntitySet="RendelesOssz">
+                <ScalarProperty Name="idKapcsolo" ColumnName="idKapcsolo" />
+                <ScalarProperty Name="Rendeles_FK" ColumnName="Rendeles_FK" />
+                <ScalarProperty Name="Konyv_FK" ColumnName="Konyv_FK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ugyfel">
+            <EntityTypeMapping TypeName="Database1Model.Ugyfel">
+              <MappingFragment StoreEntitySet="Ugyfel">
+                <ScalarProperty Name="idUgyfel" ColumnName="idUgyfel" />
+                <ScalarProperty Name="JogosultsagFK" ColumnName="JogosultsagFK" />
+                <ScalarProperty Name="UgyfelesAdatokFK" ColumnName="UgyfelesAdatokFK" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
